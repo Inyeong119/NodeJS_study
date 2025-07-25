@@ -26,9 +26,10 @@ taskController.getTask= async (req,res)=>{
 
 taskController.modifyTask = async (req, res) => {
   try {
-    const { id, isComplete } = req.body;
+    const { id } = req.params;
+    const { isComplete } = req.body;
     const updatedTask = await Task.findByIdAndUpdate(
-      id,{ isComplete },{ new: true }
+      id,{ isComplete },{ new : true }
     ).select('-__v');
     if (!updatedTask) {
       return res.status(404).json({ status: 'fail', error: '해당 메모를 찾을 수 없습니다.' });
@@ -43,7 +44,7 @@ taskController.modifyTask = async (req, res) => {
 
 taskController.deleteTask = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const deletedTask = await Task.findByIdAndDelete(id).select('-__v');
     if (!deletedTask) {
       return res.status(404).json({ status: 'fail', error: '해당 메모를 찾을 수 없습니다.' });

@@ -6,7 +6,7 @@ console.log("REACT_APP_BACKEND_PROXY:", process.env.REACT_APP_BACKEND_PROXY);
 console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const api = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_PROXY || "https://todoapp-dem.netlify.app"}`,
+  baseURL: `${process.env.REACT_APP_BACKEND_PROXY || "http://localhost:5000"}`,
   headers: {
     "Content-Type": "application/json",
     authorization: "Bearer " + sessionStorage.getItem("token"),

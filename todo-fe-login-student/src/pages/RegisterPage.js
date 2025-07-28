@@ -37,7 +37,7 @@ const RegisterPage = () => {
       if (password !== confirmPassword) {
         throw new Error("비밀번호가 일치하지 않습니다. 다시 입력해주세요");
       }
-      const response = await api.post("/user", {
+      const response = await api.post("/api/user", {
         username, email, password});   
       if (response.status === 200) {
         alert("회원가입이 완료되었습니다!");

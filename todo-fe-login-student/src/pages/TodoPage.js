@@ -13,7 +13,7 @@ const TodoPage = () => {
   const [user, setUser] = useState(null);
 
   const getTasks = async () => {
-    const response = await api.get("/tasks");
+    const response = await api.get("/api/tasks");
     setTodoList(response.data.data);
   };
   useEffect(() => {
@@ -39,7 +39,7 @@ const TodoPage = () => {
     }
     
     try {
-      const response = await api.post("/tasks", {
+      const response = await api.post("/api/tasks", {
         task: todoValue,
         isComplete: false,
       });
@@ -56,7 +56,7 @@ const TodoPage = () => {
   const deleteItem = async (id) => {
     try {
       console.log(id);
-      const response = await api.delete(`/tasks/${id}`);
+      const response = await api.delete(`/api/tasks/${id}`);
       if (response.status === 200) {
         getTasks();
       }
@@ -68,7 +68,7 @@ const TodoPage = () => {
   const toggleComplete = async (id) => {
     try {
       const task = todoList.find((item) => item._id === id);
-      const response = await api.put(`/tasks/${id}`, {
+      const response = await api.put(`/api/tasks/${id}`, {
         isComplete: !task.isComplete,
       });
       if (response.status === 200) {

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_PROXY || "http://localhost:5000"}/api`,
+  baseURL: `${process.env.REACT_APP_BACKEND_PROXY || "http://todo-demo-inyeong.ap-northeast-2.elasticbeanstalk.com"}/api`,
   headers: {
     "Content-Type": "application/json",
     authorization: "Bearer " + sessionStorage.getItem("token"),

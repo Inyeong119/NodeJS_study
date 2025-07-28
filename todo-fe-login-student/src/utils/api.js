@@ -1,5 +1,10 @@
 import axios from "axios";
 
+console.log("Environment variables:");
+console.log("REACT_APP_BACKEND_URL:", process.env.REACT_APP_BACKEND_URL);
+console.log("REACT_APP_BACKEND_PROXY:", process.env.REACT_APP_BACKEND_PROXY);
+console.log("NODE_ENV:", process.env.NODE_ENV);
+
 const api = axios.create({
   baseURL: `${process.env.REACT_APP_BACKEND_PROXY || "https://todoapp-dem.netlify.app"}`,
   headers: {

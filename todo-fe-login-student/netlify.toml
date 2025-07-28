@@ -3,8 +3,10 @@
   to = "/index.html"
   status = 200
 
+[functions]
+  directory = "netlify/functions"
+
 [[redirects]]
   from = "/api/*"
-  to = "http://todo-demo-inyeong.ap-northeast-2.elasticbeanstalk.com/api/:splat"
-  status = 200
-  force = true 
+  to = "/.netlify/functions/api-proxy"
+  status = 200 

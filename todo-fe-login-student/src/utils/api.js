@@ -26,9 +26,12 @@ api.interceptors.response.use(
     return response;
   },
   function (error) {
-    error = error.response.data;
-    console.log("RESPONSE ERROR", error);
-    return Promise.reject(error);
+    console.log("RESPONSE ERROR", error.response?.data);
+    console.log("REQUEST URL:", error.config?.url);
+    console.log("REQUEST METHOD:", error.config?.method);
+    console.log("BASE URL:", error.config?.baseURL);
+    console.log("FULL URL:", error.config?.baseURL + error.config?.url);
+    return Promise.reject(error.response?.data || error);
   }
 );
 

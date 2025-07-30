@@ -7,6 +7,13 @@ require('dotenv').config();
 const MONGO_DB_PROD = process.env.MONGO_DB_PROD;
 console.log("MONGO_DB_PROD",MONGO_DB_PROD);
 const app = express();
+
+// 모든 요청을 로깅하는 미들웨어
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use("/api",indexRouter);

@@ -4,10 +4,21 @@ const Task = require('../model/Task');
 taskController.createTask= async (req,res)=>{
   try{
     const { task, isComplete} = req.body;
-    const newTask = new Task({task , isComplete});
+    
+    // req.user가 없으면 에러 반환
+    if (!req.user || !req.user._id) {
+      console.log("User not found in request");
+      return res.status(401).json({status:'fail', error: '사용자 정보가 없습니다.'});
+    }
+    
+    const author = req.user._id;
+    console.log("Author ID:", author);
+    const newTask = new Task({task , isComplete, author});
     await newTask.save();
+    console.log("Task saved with author:", author);
     res.status(200).json({status:'ok',data:newTask});
   } catch (err) {
+    console.log("Error in createTask:", err);
     res.status(400).json({status:'fail',error: err});
   };
 };
@@ -15,7 +26,7 @@ taskController.createTask= async (req,res)=>{
 taskController.getTask= async (req,res)=>{
 
   try{
-    const taskList = await Task.find({}).select("-__v");
+    const taskList = await Task.find({}).populate('author', 'username').select("-__v");
     res.status(200).json({status:'ok',data: taskList});
   } catch (err) {
     res.status(400).json({status:'fail',error: err});

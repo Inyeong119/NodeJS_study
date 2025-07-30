@@ -38,4 +38,16 @@ userController.loginWithEmail = async(req,res)=> {
     };
 }
 
+userController.getUser = async(req,res)=>{
+    try{
+        const user = User.findById(req.userId);
+        if(!user){
+            throw new Error('유저가 존재하지 않습니다.');
+        };
+        res.status(200).json({status:'success',user});
+    } catch(error){
+        res.status(400).json({status:'fail',error:error.message});
+    };
+}
+
 module.exports = userController;

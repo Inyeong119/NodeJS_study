@@ -6,11 +6,11 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
 
-const TodoPage = () => {
+const TodoPage = ({ setUser, user }) => {
   const navigate = useNavigate();
   const [todoList, setTodoList] = useState([]);
   const [todoValue, setTodoValue] = useState("");
-  const [user, setUser] = useState(null);
+
 
   const getTasks = async () => {
     const response = await api.get("/api/tasks");
@@ -19,14 +19,12 @@ const TodoPage = () => {
   useEffect(() => {
     // 로그인 상태 확인
     const token = sessionStorage.getItem("token");
-    const userData = sessionStorage.getItem("user");
     
-    if (token && userData) {
-      setUser(JSON.parse(userData));
+    if (token && user) {
       getTasks();
     }
     // 로그인되지 않은 경우에도 페이지는 표시 (할일 목록은 로드하지 않음)
-  }, []);
+  }, [user]);
   const addTodo = async () => {
     if (!user) {
       alert("로그인이 필요합니다.");
@@ -38,11 +36,17 @@ const TodoPage = () => {
       return;
     }
     
+    console.log("=== ADD TODO DEBUG ===");
+    console.log("User:", user);
+    console.log("Todo value:", todoValue);
+    console.log("Token:", sessionStorage.getItem("token"));
+    
     try {
       const response = await api.post("/api/tasks", {
         task: todoValue,
         isComplete: false,
       });
+      console.log("API Response:", response);
       if (response.status === 200) {
         getTasks();
       }
@@ -84,6 +88,7 @@ const TodoPage = () => {
     sessionStorage.removeItem("user");
     setUser(null);
     setTodoList([]); // 할일 목록 초기화
+    navigate("/login"); // 로그인 페이지로 리다이렉트
   };
 
   const handleLogin = () => {

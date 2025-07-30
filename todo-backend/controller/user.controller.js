@@ -40,7 +40,8 @@ userController.loginWithEmail = async(req,res)=> {
 
 userController.getUser = async(req,res)=>{
     try{
-        const user = User.findById(req.userId);
+        // req.user는 인증 미들웨어에서 이미 설정됨
+        const user = req.user;
         if(!user){
             throw new Error('유저가 존재하지 않습니다.');
         };
